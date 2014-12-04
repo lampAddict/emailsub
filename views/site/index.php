@@ -1,12 +1,28 @@
 <?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
 /* @var $this yii\web\View */
 $this->title = 'Email subscribe page';
+
+
+ $form = ActiveForm::begin([
+    'id' => 'subscribe-form',
+    'options' => ['class' => 'form-horizontal'],
+]) ?>
+
+<?= $form->field($model, 'email') ?>
+
+<div class="form-group">
+    <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+</div>
+<?
+ActiveForm::end();
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <?=$form?>
-        <?=$list?>
     </div>
 
     <div class="body-content">

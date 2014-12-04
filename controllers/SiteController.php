@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\EmailList;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -49,28 +50,23 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        var_dump($_POST);
+        $model = new EmailList();
 
-        $form = '';
-        $list = '';
-        switch( Yii::$app->user->identity->username ){
-
-            case 'admin':
-                $list = '<p class="lead">list</p>';
-                break;
-            case 'demo' :
-            default:
-                $form = '
-                        <h3>Authorize yourself as admin/admin to view list of subscribed emails</h3>
-                        <p class="lead">
-                            <form action="" method="post">
-                                <input type="text" name="email" placeholder="Enter email"/>
-                                <input type="submit" value="Submit"/>
-                            </form>
-                        </p>';
-                break;
+        if( isset($_POST['EmailList']) ){
+            $email= \Yii::$app->request->post('EmailList');
+            $model->email = $email['email'];
+            $model->setAttribute('email',$model->email);
         }
-        return $this->render('index', ['form'=>$form,'list'=>$list]);
+
+        if ( $model->validate() ) {
+            // all inputs are valid
+            $model->save();
+        } else {
+            // validation failed
+        }
+
+        //return $this->render('index', ['form'=>$form,'list'=>$list]);
+        return $this->render('index',array('model'=>$model));
     }
 
     public function actionLogin()
