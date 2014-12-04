@@ -5,10 +5,8 @@ $this->title = 'Email subscribe page';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h3>Authorize yourself as admin/admin or demo/demo</h3>
-
-        <p class="lead"><?=$form?></p>
-        <p class="lead"><?=$list?></p>
+        <?=$form?>
+        <?=$list?>
     </div>
 
     <div class="body-content">

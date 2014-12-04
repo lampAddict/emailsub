@@ -49,19 +49,25 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        var_dump($_POST);
+
         $form = '';
         $list = '';
         switch( Yii::$app->user->identity->username ){
-            case 'demo' :
-                $form = '<form action="" method="post">
-                            <input type="text" name="email" placeholder="Enter email"/>
-                            <input type="submit" value="Submit"/>
-                        </form>';
-                    break;
+
             case 'admin':
-                $list = 'list';
+                $list = '<p class="lead">list</p>';
                 break;
+            case 'demo' :
             default:
+                $form = '
+                        <h3>Authorize yourself as admin/admin to view list of subscribed emails</h3>
+                        <p class="lead">
+                            <form action="" method="post">
+                                <input type="text" name="email" placeholder="Enter email"/>
+                                <input type="submit" value="Submit"/>
+                            </form>
+                        </p>';
                 break;
         }
         return $this->render('index', ['form'=>$form,'list'=>$list]);
