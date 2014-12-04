@@ -52,21 +52,46 @@ class SiteController extends Controller
     {
         $model = new EmailList();
 
-        if( isset($_POST['EmailList']) ){
-            $email= \Yii::$app->request->post('EmailList');
-            $model->email = $email['email'];
-            $model->setAttribute('email',$model->email);
+        switch( Yii::$app->user->identity->username ){
+
+            case 'admin':
+                $emails = EmailList::find()->asArray()->all();
+
+                $list = '<table>
+                            <tr>
+                                <th colspan="2">
+                                    List of subscribed e-mails:
+                                </th>
+                    </tr>';
+                foreach($emails as $count=>$email_data){
+                    $list .= '<tr>
+                                <td width="10%">' . ($count + 1) . '</td>
+                                <td>' . $email_data['email'] . '</td>
+                            </tr>';
+                }
+                $list .= '</table>';
+                return $this->render('index',array('list'=>$list));
+                break;
+
+            case 'demo' :
+            default:
+                    if( isset($_POST['EmailList']) ){
+                        $email= \Yii::$app->request->post('EmailList');
+                        $model->email = $email['email'];
+                        $model->setAttribute('email',$model->email);
+                    }
+
+                    if ( $model->validate() ) {
+                        // all inputs are valid
+                        $model->save();
+                    } else {
+                        // validation failed
+                    }
+
+                    return $this->render('index',array('model'=>$model));
+                break;
         }
 
-        if ( $model->validate() ) {
-            // all inputs are valid
-            $model->save();
-        } else {
-            // validation failed
-        }
-
-        //return $this->render('index', ['form'=>$form,'list'=>$list]);
-        return $this->render('index',array('model'=>$model));
     }
 
     public function actionLogin()
