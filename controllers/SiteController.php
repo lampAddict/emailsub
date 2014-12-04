@@ -82,8 +82,9 @@ class SiteController extends Controller
                     }
 
                     if ( $model->validate() ) {
-                        // all inputs are valid
-                        $model->save();
+                        // email is valid, check if it's already in db
+                        if( !EmailList::findOne(['email' => $email['email']]) )
+                            $model->save();
                     } else {
                         // validation failed
                     }
