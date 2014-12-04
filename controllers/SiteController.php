@@ -49,7 +49,22 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $form = '';
+        $list = '';
+        switch( Yii::$app->user->identity->username ){
+            case 'demo' :
+                $form = '<form action="" method="post">
+                            <input type="text" name="email" placeholder="Enter email"/>
+                            <input type="submit" value="Submit"/>
+                        </form>';
+                    break;
+            case 'admin':
+                $list = 'list';
+                break;
+            default:
+                break;
+        }
+        return $this->render('index', ['form'=>$form,'list'=>$list]);
     }
 
     public function actionLogin()

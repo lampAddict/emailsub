@@ -1,15 +1,14 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
+$this->title = 'Email subscribe page';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h3>Authorize yourself as admin/admin or demo/demo</h3>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p class="lead"><?=$form?></p>
+        <p class="lead"><?=$list?></p>
     </div>
 
     <div class="body-content">
