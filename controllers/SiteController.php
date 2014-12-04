@@ -55,21 +55,28 @@ class SiteController extends Controller
         switch( Yii::$app->user->identity->username ){
 
             case 'admin':
+
                 $emails = EmailList::find()->asArray()->all();
 
-                $list = '<table>
-                            <tr>
-                                <th colspan="2">
-                                    List of subscribed e-mails:
-                                </th>
-                    </tr>';
-                foreach($emails as $count=>$email_data){
-                    $list .= '<tr>
-                                <td width="10%">' . ($count + 1) . '</td>
-                                <td>' . $email_data['email'] . '</td>
-                            </tr>';
+                if( !empty($emails) ){
+                    $list = '<table>
+                                    <tr>
+                                        <th colspan="2">
+                                            List of subscribed e-mails:
+                                        </th>
+                                    </tr>';
+                    foreach($emails as $count=>$email_data){
+                        $list .= '  <tr>
+                                        <td width="10%">' . ($count + 1) . '</td>
+                                        <td>' . $email_data['email'] . '</td>
+                                    </tr>';
+                    }
+                    $list .= '</table>';
                 }
-                $list .= '</table>';
+                else{
+                    $list = 'List of subscribed e-mails is empty';
+                }
+
                 return $this->render('index',array('list'=>$list));
                 break;
 
